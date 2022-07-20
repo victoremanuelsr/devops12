@@ -1,0 +1,34 @@
+{
+	"builders": [
+	  {
+		"type": "docker",
+		"image": "golang:alpine",
+		"commit": true,
+		"changes": [
+		    "EXPOSE 8080",
+            "WORKDIR /src/",
+		    "ENTRYPOINT go run ." 
+		]
+	  }
+	],
+	"provisioners": [
+        {
+            "type": "file",
+            "source": "app/",
+            "destination": "/src/"
+        },
+        {
+            "type": "shell",
+            "inline": ["cd /src/", "go mod init calculator", "go mod tidy", "go build"]
+        }
+	],
+	"post-processors": [
+        [
+            {
+            "type": "docker-tag",
+            "repository": "victoremanuelsr/calculatorgo",
+            "tags": "1.0"
+            }
+        ]
+    ]
+}
