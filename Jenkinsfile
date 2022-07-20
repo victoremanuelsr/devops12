@@ -3,7 +3,7 @@ pipeline{
   stages{
     stage('Deploy microservice docker'){
       steps{
-        sh 'docker run -p 8082:8082 victoremanuelsr/calculatorgo:1.0'
+        sh 'docker run -p 8080:8080 -d victoremanuelsr/calculatorgo:1.0'
       }
     }
   }
